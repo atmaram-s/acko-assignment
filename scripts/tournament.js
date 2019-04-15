@@ -1,16 +1,3 @@
-function generateNRandomNumbersBetween(count, lowerBound, upperBound) {
-    const numberArray = [];
-
-    while (numberArray.length < count) {
-        const number = Math.floor(Math.random() * (upperBound - lowerBound + 1) + lowerBound);
-
-        if (!numberArray.includes(number)) {
-            numberArray.push(number);
-        }
-    }
-
-    return numberArray;
-}
 
 class Tournament {
     constructor() {
