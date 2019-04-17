@@ -1,6 +1,6 @@
 class Match {
     static createMatchCardPlaceholder() {
-        const matchCardPlaceholder = createElementWith('div', {
+        const matchCardPlaceholder = Utils.createElementWith('div', {
             className: 'match'
         });
     
@@ -28,7 +28,6 @@ class Match {
                 `#${ this.data.id } .match__team-info`
             );
 
-            console.log('Team info', teamInfoEl, winner);
             teamInfoEl[winner].className = `${ teamInfoEl[winner].className } winner`;
             teamInfoEl[~~!winner].className = `${ teamInfoEl[~~!winner].className } loser`;
 
@@ -37,22 +36,22 @@ class Match {
     }
 
     getMatchTime() {
-        return generateRandomNumberBetween(5000, 10000);
+        return Utils.generateRandomNumberBetween(5000, 10000);
     }
 
     getWinner() {
-        return generateRandomNumberBetween(0, 1);
+        return Utils.generateRandomNumberBetween(0, 1);
     }
 
     addMatchCard() {
-        const matchCard = createElementWith('div', {
+        const matchCard = Utils.createElementWith('div', {
             className: 'match__details',
             id: this.data.id
         });
 
         const homeTeamInfo = this.generateTeamInfo(this.data.home);
         const awayTeamInfo = this.generateTeamInfo(this.data.away);
-        const vsText = createElementWith('div', {
+        const vsText = Utils.createElementWith('div', {
             className: 'match__vs-txt'
         });
         vsText.append('vs');
@@ -67,7 +66,7 @@ class Match {
 
     generateTeamInfo(teamIndex) {
         const teamdata = teams[teamIndex];
-        const matchTeamInfoEl = createElementWith('div', {
+        const matchTeamInfoEl = Utils.createElementWith('div', {
             className: 'match__team-info',
             id:`${ this.data.id }-${ teamdata.teamId }`
         });

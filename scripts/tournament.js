@@ -1,5 +1,43 @@
 
 class Tournament {
+    static createTournamentRounds(numberOfRounds) {
+        const roundsArray = new Array((2 * numberOfRounds) + 1);
+        const arrLength = roundsArray.length;
+        const tournamentTreeContainer = document.getElementById('tournament-tree');
+    
+        for (let index = 0; index < numberOfRounds; index++) {
+            let className = 'round';
+    
+            if (index === 0) {
+                className += ' first';
+            } else if (index === numberOfRounds - 1) {
+                className += ' last';
+            }
+            const leftRound = Utils.createElementWith('div', {
+                id: `lRound${ index + 1}`,
+                className: `${ className } round--left`
+            });
+    
+            const rightRound = Utils.createElementWith('div', {
+                id: `rRound${ index + 1}`,
+                className: `${ className } round--right`
+            });
+    
+            roundsArray[index] = leftRound;
+            roundsArray[arrLength - index - 1] = rightRound;
+        }
+    
+        const finalRound = Utils.createElementWith('div', {
+            id: 'finalRound',
+            className: 'round'
+        });
+        roundsArray[numberOfRounds] = finalRound;
+    
+        roundsArray.forEach((round) => {
+            tournamentTreeContainer.append(round);
+        });
+    }
+
     constructor() {
         this.level = 0;
     }
@@ -10,8 +48,8 @@ class Tournament {
         const mid = (count) - 1;
         const end = teams.length - 1;
 
-        const leftWing = generateNRandomNumbersBetween(count, start, mid);
-        const rightWing = generateNRandomNumbersBetween(count, mid + 1, end);
+        const leftWing = Utils.generateNRandomNumbersBetween(count, start, mid);
+        const rightWing = Utils.generateNRandomNumbersBetween(count, mid + 1, end);
 
         this.createBracket(numberOfRounds, leftWing.length);
         this.startRounds(leftWing, rightWing);
