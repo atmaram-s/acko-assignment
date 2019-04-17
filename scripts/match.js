@@ -1,7 +1,9 @@
 class Match {
-    static createMatchCardPlaceholder() {
+    static createMatchCardPlaceholder(isFirstHalf) {
+        const className = `match ${ isFirstHalf ? 'first-half' : 'last-half' }`;
+
         const matchCardPlaceholder = Utils.createElementWith('div', {
-            className: 'match'
+            className
         });
     
         return matchCardPlaceholder;

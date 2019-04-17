@@ -40,11 +40,35 @@ body {
 
 
 .round {
-    width: 360px;
+    width: 400px;
     flex: 1 0 auto;
     display: flex;
     flex-direction: column;
     justify-content: center;
+    position: relative;
+}
+
+.round:after {
+    content: '';
+    width: 20px;
+    height: 2px;
+    position: absolute;
+    background-color: #333;
+    top: 50%;
+    transform:  translateY(-1px);
+}
+
+.round--left:after {
+    left: 0;
+}
+
+.round--right:after {
+    right: 0;
+}
+
+.round:first-child:after,
+.round:last-child:after {
+    display: none;
 }
 
 .match {
@@ -61,8 +85,9 @@ body {
 .match:after {
     content: '';
     width: 20px;
-    height: 50%;
+    height: 100%;
     position: absolute;
+    transform: translateY(-1px);
 }
 
 .round--left .match:after {
@@ -84,14 +109,47 @@ body {
     border-left: none;
 }
 
-.match:nth-child(even):after {
+.match.first-half:after {
+    top: 0;
+}
+
+.match.last-half:after {
+    bottom: 0;
+}
+
+.match:first-child:after {
+    top: 50%;
+    border-top: 2px solid #333;
+}
+
+.match:first-child .match__details:after {
+    display: none;
+}
+
+.match:last-child .match__details:after {
+    display: none;
+}
+
+.match:last-child:after {
     bottom: 50%;
     border-bottom: 2px solid #333;
 }
 
-.match:nth-child(odd):after {
+.match__details:after {
+    content: '';
+    width: 20px;
+    height: 2px;
+    background-color: #333;
+    position: absolute;
     top: 50%;
-    border-top: 2px solid #333;
+}
+
+.round--left .match__details:after {
+    right: 0;
+}
+
+.round--right .match__details:after {
+    left: 0;
 }
 
 .match:before {
@@ -101,6 +159,7 @@ body {
     position: absolute;
     top: 50%;
     background-color: #333;
+    display: none;
 }
 
 .round--left .match:before {
@@ -112,11 +171,11 @@ body {
 }
 
 .round--left.first .match:before {
-    background-color: transparent;
+    display: none;
 }
 
 .round--right.first .match:before {
-    background-color: transparent;
+    display: none;
 }
 
 .round--left.last .match:after {

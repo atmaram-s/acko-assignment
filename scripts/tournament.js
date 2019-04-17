@@ -48,6 +48,8 @@ class Tournament {
         const mid = (count) - 1;
         const end = teams.length - 1;
 
+        teams.shuffle();
+
         const leftWing = Utils.generateNRandomNumbersBetween(count, start, mid);
         const rightWing = Utils.generateNRandomNumbersBetween(count, mid + 1, end);
 
@@ -64,8 +66,9 @@ class Tournament {
             const rightRoundContainer = document.getElementById(`rRound${ index }`);
 
             for(let mIndex = 0; mIndex < numberOfMatches; mIndex++) {
-                const lMatch = Match.createMatchCardPlaceholder();
-                const rMatch = Match.createMatchCardPlaceholder();
+                const isFirstHalf = mIndex < numberOfMatches >>> 1;
+                const lMatch = Match.createMatchCardPlaceholder(isFirstHalf);
+                const rMatch = Match.createMatchCardPlaceholder(isFirstHalf);
                 
                 leftRoundContainer.append(lMatch);
                 rightRoundContainer.append(rMatch);
@@ -84,6 +87,9 @@ class Tournament {
                 this.startFinalMatch(leftRoundTeams[0], rightRoundTeams[0]);
                 return;
             }
+
+            leftRoundTeams.shuffle();
+            rightRoundTeams.shuffle();
     
             this.level += 1;
             const level = this.level;
