@@ -15,3 +15,17 @@ function generateNRandomNumbersBetween(count, lowerBound, upperBound) {
 
     return numberArray;
 }
+
+function createElementWith(element, { id, className }) {
+    const domEl = document.createElement(element);
+
+    if (id) {
+        domEl.setAttribute('id', id);
+    }
+
+    if (className) {
+        domEl.setAttribute('class', className);
+    }
+
+    return domEl;
+}

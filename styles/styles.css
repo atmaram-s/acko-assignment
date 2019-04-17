@@ -4,6 +4,8 @@
     border: none;
     outline: none;
     box-sizing: border-box;
+    font-family: sans-serif;
+    color: #333;
 }
 
 html,
@@ -24,6 +26,172 @@ body {
     background-color: #333;
 }
 
-#tournament-tree {
+#tournament-tree-scroller {
     flex: 1;
+    overflow: auto;
+}
+
+#tournament-tree {
+    display: flex;
+    flex-direction: row;
+    align-items: stretch;
+}
+
+
+
+.round {
+    width: 360px;
+    flex: 1 0 auto;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.match {
+    flex: 1 0 auto;
+    background-color: #f1f1f1;
+    padding: 10px 20px;
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: flex-start;
+}
+
+.match:after {
+    content: '';
+    width: 20px;
+    height: 50%;
+    position: absolute;
+}
+
+.round--left .match:after {
+    right: 0;
+    border-right: 2px solid #333;
+}
+
+.round--left.last .match:after {
+    right: 0;
+    border-right: 2px solid #333;
+}
+
+.round--right .match:after {
+    left:0;
+    border-left: 2px solid #333;
+}
+
+.round--right.last .match:after {
+    border-left: none;
+}
+
+.match:nth-child(even):after {
+    bottom: 50%;
+    border-bottom: 2px solid #333;
+}
+
+.match:nth-child(odd):after {
+    top: 50%;
+    border-top: 2px solid #333;
+}
+
+.match:before {
+    content: '';
+    width: 20px;
+    height: 2px;
+    position: absolute;
+    top: 50%;
+    background-color: #333;
+}
+
+.round--left .match:before {
+    left: 0;
+}
+
+.round--right .match:before {
+    right: 0;
+}
+
+.round--left.first .match:before {
+    background-color: transparent;
+}
+
+.round--right.first .match:before {
+    background-color: transparent;
+}
+
+.round--left.last .match:after {
+    border-right: none;
+}
+
+.round--right.last .match:after {
+    border-left: none;
+}
+
+#finalRound .match:before {
+    left: 0;
+}
+
+#finalRound .match:after {
+    height: 2px;
+    right: 0;
+    background-color: #333;
+    border: none;
+}
+
+.match__details {
+    width: 100%;
+    height: auto;
+    padding: 10px;
+    display: flex;
+    flex-direction: row;
+    flex: 0 1 auto;
+    background-color: white;
+    border-radius: 4px;
+
+}
+
+.match__team-info {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    padding: 10px 0;
+}
+
+.match__team-info:first-child * {
+    text-align: right;
+}
+
+.match__team-info:last-child * {
+    text-align: left;
+}
+
+.match__vs-txt {
+    padding: 10px 5px;
+    padding-top: 15px;
+}
+
+.match__team-info * {
+    padding: 5px 0;
+    white-space: nowrap;
+}
+
+.match__team-info h2 {
+    font-size: 16px;
+}
+
+.match__team-info h2 {
+    font-size: 15px;
+    font-weight: normal;
+}
+
+.match__team-info span {
+    font-size: 15px;
+}
+
+.match__team-info.winner * {
+    color: #8bc34a
+}
+
+.match__team-info.loser * {
+    color: #ef5350;
 }

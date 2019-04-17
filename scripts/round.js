@@ -16,11 +16,14 @@ class Round {
                 const home = roundTeams[index];
                 const away = roundTeams[index + 1];
 
+                const matchIndex = index >>> 1;
+
                 const matchData = {
                     home,
                     away,
-                    matchId: `m-${ Date.now }-${ index }`,
-                    index: index >>> 1
+                    id: `m-${ this.data.id }-${ matchIndex }`,
+                    roundId: this.data.id,
+                    index: matchIndex
                 };
                 const match = new Match(matchData);
                 match.start(this.handleMatchCompletion)
@@ -32,7 +35,6 @@ class Round {
         this.winners[matchData.index] = winner;
 
         if (!this.winners.includes(undefined)) {
-            console.log('Round won', this.winners);
             this.roundResolver(this.winners);
         }
     }

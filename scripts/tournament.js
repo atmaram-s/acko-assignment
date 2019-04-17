@@ -4,7 +4,7 @@ class Tournament {
         this.level = 0;
     }
 
-    start() {
+    start(numberOfRounds) {
         const start = 0;
         const count = teams.length >>> 1
         const mid = (count) - 1;
@@ -13,7 +13,31 @@ class Tournament {
         const leftWing = generateNRandomNumbersBetween(count, start, mid);
         const rightWing = generateNRandomNumbersBetween(count, mid + 1, end);
 
+        this.createBracket(numberOfRounds, leftWing.length);
         this.startRounds(leftWing, rightWing);
+    }
+
+    createBracket(numberOfRounds, firstLevelTeamsCount) {
+        let numberOfMatches = firstLevelTeamsCount;
+
+        for (let index = 1; index <= numberOfRounds; index++) {
+            numberOfMatches >>>= 1;
+            const leftRoundContainer = document.getElementById(`lRound${ index }`);
+            const rightRoundContainer = document.getElementById(`rRound${ index }`);
+
+            for(let mIndex = 0; mIndex < numberOfMatches; mIndex++) {
+                const lMatch = Match.createMatchCardPlaceholder();
+                const rMatch = Match.createMatchCardPlaceholder();
+                
+                leftRoundContainer.append(lMatch);
+                rightRoundContainer.append(rMatch);
+            }
+        }
+
+        const finalRoundContainer = document.getElementById('finalRound');
+        const finalMatch = Match.createMatchCardPlaceholder();
+
+        finalRoundContainer.append(finalMatch);
     }
 
     async startRounds(leftRoundTeams, rightRoundTeams) {
@@ -28,12 +52,12 @@ class Tournament {
     
             const leftRoundData = {
                 teams: leftRoundTeams,
-                roundId: `left-wing--level-${ level }`,
+                id: `lRound${ level }`,
                 level
             };
             const rightRoundData = {
                 teams: rightRoundTeams,
-                roundId: `right-wing--level-${ level }`,
+                id: `rRound${ level }`,
                 level
             };
             const leftRound = new Round(leftRoundData);
@@ -45,17 +69,25 @@ class Tournament {
     
             const [leftRoundWinners, rightRoundWinners] = await Promise.all(roundsResolver);
 
-            console.log('Winners!!!!!!', leftRoundWinners, rightRoundWinners);
             this.startRounds(leftRoundWinners, rightRoundWinners);
         } catch (error) {
-            console.log('Error homie', error);
+            console.error('Something went wrong', error);
         }
     }
 
     startFinalMatch(home, away) {
-        const final = new Match({ home, away });
+        const final = new Match({
+            home,
+            away,
+            roundId: 'finalRound',
+            index: 0,
+            id: 'finalMatch'
+        });
+
         final.start((winner) => {
-            console.log('Winner winner', winner);
+            const winnerInfo = teams[winner];
+
+            alert(`Winner winner chicken dinner: ${ winnerInfo.teamName }`)
         });
     }
 }
